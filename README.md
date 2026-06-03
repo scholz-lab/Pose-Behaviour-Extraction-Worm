@@ -4,3 +4,6 @@ This project provides an automated pipeline for the kinematic analysis of worm l
 
 ### Step-1: Pose Estimation (DeepLabCut)
  The initial stage involved training a convolutional neural network (ResNet50) using the DeepLabCut (DLC) framework to track the worm’s body part segments. We manually labeled key anatomical points (Head, Mid-body, Tail) across a representative subset of frames around(200 frames among 8000) that extracted randomly from a video file. Model predicted bodyparts for all frames and Exported frame-by-frame (x, y) coordinates in .csv format.
+
+ ### Data Refinement & Interpolation
+ The DeepLabCut model occationally strugle when the worm in curvature postures.
