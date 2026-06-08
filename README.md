@@ -16,5 +16,5 @@ The script uses "good" tracking data to fill in those gaps via linear interpolat
 It uses vector geometry to calculate Postural Orientation and Bending Magnitude.
  #####  Directory structure
 /|_Kinematic_Visualizations
- /  |plots_posture_bending.py_
+   |__plots_posture_bending.py_
  
