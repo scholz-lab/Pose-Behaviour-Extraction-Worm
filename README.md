@@ -11,4 +11,9 @@ This project provides an automated pipeline for the kinematic analysis of worm l
     /|__Corrected_Trajectories
        /|__DLC_interp_video.py
 The script uses "good" tracking data to fill in those gaps via linear interpolation. This creates a smooth, continuous path for your analysis.
+
+### Synchronized Visualization
+It uses vector geometry to calculate Postural Orientation and Bending Magnitude.
+|_Kinematic_Visualizations
+   |plots_posture_bending.py_
  
