@@ -20,4 +20,5 @@ It uses vector geometry to calculate Postural Orientation and Bending Magnitude.
       
 It generates a dual-panel video: the left panel shows the original video with a real-time behavioral data overlay, and the right panel displays dynamically updating "YY-plots" (showing angle and velocity simultaneously).
 It applies a Power-Smoothing filter (sparse-matrix based) to remove noise while preserving the underlying biological signal of the worm’s movement.
+/ It computes the Angular Velocity ($\frac{d\theta}{dt}$) for both posture and bending using numerical differentiation.
  
