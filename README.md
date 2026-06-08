@@ -9,7 +9,7 @@ This project provides an automated pipeline for the kinematic analysis of worm l
  The DeepLabCut model often fails to track the 3rd point during tight bends or in curvature posture causing data gaps.
  #####  Directory structure
  |__Corrected_Trajectories <br>
-   &nbsp;&nbsp;&nbsp;    |__DLC_interp_video.py
+   &nbsp;&nbsp;&nbsp;    |__DLC_interp_video.py <br>
 The script uses "good" tracking data to fill in those gaps via linear interpolation. This creates a smooth, continuous path for your analysis.
 
 ### Synchronized Visualization
