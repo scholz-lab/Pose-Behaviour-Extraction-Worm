@@ -8,14 +8,14 @@ This project provides an automated pipeline for the kinematic analysis of worm l
  ### Data Refinement & Interpolation
  The DeepLabCut model often fails to track the 3rd point during tight bends or in curvature posture causing data gaps.
  #####  Directory structure
-    /|__Corrected_Trajectories
+  &nbsp;&nbsp;&nbsp;|__Corrected_Trajectories
        /|__DLC_interp_video.py
 The script uses "good" tracking data to fill in those gaps via linear interpolation. This creates a smooth, continuous path for your analysis.
 
 ### Synchronized Visualization
 It uses vector geometry to calculate Postural Orientation and Bending Magnitude.
-#####  Directory structure
-   |__Kinematic_Visualizations <br>
+
+   &nbsp;&nbsp;&nbsp; |__Kinematic_Visualizations <br>
    &nbsp;&nbsp;&nbsp;&nbsp;   |___plots_posture_bending.py
       
 It generates a dual-panel video: the left panel shows the original video with a real-time behavioral data overlay, and the right panel displays dynamically updating "YY-plots" (showing angle and velocity simultaneously).
