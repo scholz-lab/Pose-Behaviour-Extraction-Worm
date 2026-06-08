@@ -17,6 +17,8 @@ It uses vector geometry to calculate Postural Orientation and Bending Magnitude.
 
 |__Kinematic_Visualizations <br>
    &nbsp;&nbsp;&nbsp;&nbsp;   |___plots_posture_bending.py
+ <img width="947" height="385" alt="image" src="https://github.com/user-attachments/assets/2e0b93ff-6bd2-4e4b-8a2f-f6a89176f442" />
+
       
 It generates a dual-panel video: the left panel shows the original video with a real-time behavioral data overlay, and the right panel displays dynamically updating "YY-plots" (showing angle and velocity simultaneously).
 It applies a Power-Smoothing filter (sparse-matrix based) to remove noise while preserving the underlying biological signal of the worm’s movement.<br>
