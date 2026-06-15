@@ -1,6 +1,7 @@
 import os
 import subprocess
 import cv2
+import csv
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
@@ -52,6 +53,36 @@ def get_video_info(video_path):
     fps = float(num) / float(den)
     n_frames = int(parts[3]) if parts[3].strip() not in ("N/A", "") else -1
     return w, h, fps, n_frames
+
+def create_tracing_data(start_frame, posture_deg, posture_sm, posture_vel, bending_deg, bending_sm, bending_vel):
+    # Define the structure with a 'Value' column
+    filename = 'tracing_posture_bending.csv'
+    # Define the columns
+    columns = [
+        'frame', 'posture_deg', 'posture_smooth', 'posture_vel',
+        'bending_deg', 'bending_smooth', 'bending_vel'
+    ]
+    if not os.path.exists(filename):
+        with open(filename, 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(columns)
+
+    # 1. Initialize file with headers if it doesn't exist
+    # if not os.path.exists(filename):
+    with open(filename, 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(columns)
+        # for row in zip(row, posture_deg, posture_sm, posture_vel,
+        #                bending_deg, bending_sm, bending_vel):
+        #     writer.writerow(row)
+        # Use enumerate() to generate the index
+        for index, (p_deg, p_sm, p_vel, b_deg, b_sm, b_vel) in enumerate(zip(
+                posture_deg, posture_sm, posture_vel,
+                bending_deg, bending_sm, bending_vel
+        )):
+            # Write the row starting with the index
+            writer.writerow([(index+start_frame), p_deg, p_sm, p_vel, b_deg, b_sm, b_vel])
+
 
 class FfmpegFrameReader:
     def __init__(self, video_path, start_frame, native_w, native_h):
@@ -106,6 +137,7 @@ def process_video_and_extract_frames(root_dir, csv_filename, video_filename, out
     bending_mag = np.degrees(np.arccos(cos_theta)) - np.mean(np.degrees(np.arccos(cos_theta))[:5])
     bending_smooth = powersmooth(bending_mag, weight=500)
     bending_vel = derivative(bending_smooth, x=np.arange(n_frames)) * fps
+    create_tracing_data(start_frame,posture_deg, posture_smooth, posture_vel, bending_mag, bending_smooth, bending_vel)
 
     time_seconds = np.arange(start_frame, end_frame) / fps
     t_min, t_max = time_seconds[0], time_seconds[-1]
@@ -184,7 +216,7 @@ def process_video_and_extract_frames(root_dir, csv_filename, video_filename, out
 
             canvas.draw()
             plot_frame = cv2.cvtColor(np.asarray(canvas.buffer_rgba()), cv2.COLOR_RGBA2BGR)
-            out.write(np.hstack((frame_left, cv2.resize(plot_frame, (panel_width, panel_height)))))
+            #out.write(np.hstack((frame_left, cv2.resize(plot_frame, (panel_width, panel_height)))))
 
     out.release()
     plt.close(fig)
@@ -196,5 +228,6 @@ if __name__ == "__main__":
         csv_filename="corrected_20252606-16-11Expnt001DLC_Resnet50_tracking_20252606-16-11Expnt001May22shuffle1_snapshot_best-90.csv",
         video_filename="interpolated_dlc_tracking_distance.mp4",
         output_filename="synchronized_velocity_yy_plot.mp4",
+        start_frame=0,
         end_frame=8000
     )
