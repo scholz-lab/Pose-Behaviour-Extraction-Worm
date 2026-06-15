@@ -6,4 +6,21 @@ This project provides an automated pipeline for the kinematic analysis of worm l
  The initial stage involved training a convolutional neural network (ResNet50) using the DeepLabCut (DLC) framework to track the worm’s body part segments. We manually labeled key anatomical points (Head, Mid-body, Tail) across a representative subset of frames around(200 frames among 8000) that extracted randomly from a video file. Model predicted bodyparts for all frames and Exported frame-by-frame (x, y) coordinates in .csv format.
 
  ### Data Refinement & Interpolation
- The DeepLabCut model occationally strugle when the worm in curvature postures.
+ The DeepLabCut model often fails to track the 3rd point during tight bends or in curvature posture causing data gaps.
+ #####  Directory structure
+ |__Corrected_Trajectories <br>
+   &nbsp;&nbsp;&nbsp;    |__DLC_interp_video.py <br>
+The script uses "good" tracking data to fill in those gaps via linear interpolation. This creates a smooth, continuous path for your analysis.
+
+### Synchronized Visualization
+It uses vector geometry to calculate Postural Orientation and Bending Magnitude.
+
+|__Kinematic_Visualizations <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;   |___plots_posture_bending.py
+ <img width="947" height="385" alt="image" src="https://github.com/user-attachments/assets/2e0b93ff-6bd2-4e4b-8a2f-f6a89176f442" />
+
+      
+It generates a dual-panel video: the left panel shows the original video with a real-time behavioral data overlay, and the right panel displays dynamically updating "YY-plots" (showing angle and velocity simultaneously).
+It applies a Power-Smoothing filter (sparse-matrix based) to remove noise while preserving the underlying biological signal of the worm’s movement.<br>
+It computes the Angular Velocity ($\frac{d\theta}{dt}$) for both posture and bending using numerical differentiation.
+ 
